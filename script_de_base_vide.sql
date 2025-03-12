@@ -34,7 +34,10 @@ go
 create table tbl_piece(
 id_piece int identity primary key,
 description nvarchar(200),
-numeroIndustrie int unique
+type nvarchar(200),
+marqueModele nvarchar(200),
+numeroIndustrie nvarchar(200) unique,
+caracteristiques nvarchar(200)
 )
 go
 
@@ -110,19 +113,87 @@ go
 
  --pour ajouter les piece il faut prendre ceux qui n'ont pas de generique 
   
-/* 10-m'assure qu'il n'y a pas 2 pièces pareils pour un projet */
-/* 11- unicité */ 
+/* 10-m'assure qu'il n'y a pas 2 pièces pareils pour un projet */ --voir question 4
+/* 11- unicité */ --voir question 4
 
 
 /* PARTIE 3 */
 /* 2. a) insertion de données en batch à partir de bdDonnee pour les employes */
+
+insert into tbl_employee(prenom, nom, email) select Prénom, Nom, [Adresse Email] from BDDonneesTP.DBO.employe$
+go
+
 /* 2. b) insertion de données en batch à partir de bdDonnee pour les pieces de votre sujet */
+
+insert into tbl_piece(description, numeroIndustrie) select Description, [Numéro de Pièce] from BDDonneesTP.DBO.reseau$
+go
+
 /* 2. c) pratique cross apply : trouver les employés qui ont un nom et prénom identique à d’autres. */
+
+
+
+
+select e.nom, e.prenom, e.email
+from tbl_employee e cross apply (select* from tbl_employee 
+where tbl_employee.nom = e.nom 
+and tbl_employee.prenom = e.prenom  
+and tbl_employee.id_employee <> e.id_employee) employeeIdentique 
+ORDER BY e.nom, e.prenom;
+
+
+
 /* 3. ajout de données, au moins 3 dans chaque table */
 
 /* 3. a)	Pour la table de projet, ajouter 4 données dont 2 pour la même compagnie */
+
+-- Insertion de projets
+insert into tbl_projet(nom, description, id_compagnie)
+select 
+    'Projet Alpha', 'Description du projet Alpha', c.id_compagnie
+from tbl_compagnie c
+where c.nom = 'Compagnie X'
+
+union all
+
+select 
+    'Projet Beta', 'Description du projet Beta', c.id_compagnie
+from tbl_compagnie c
+where c.nom = 'Compagnie Y'
+
+union all
+
+select 
+    'Projet Gamma', 'Description du projet Gamma', c.id_compagnie
+from tbl_compagnie c
+where c.nom = 'Compagnie X'
+
+union all
+
+select 
+    'Projet Delta', 'Description du projet Delta', c.id_compagnie
+from tbl_compagnie c
+where c.nom = 'Compagnie Z';
+
+
 /* 3. b)	Pour la table des projets-pièces, faites des ajouts pour 2 projets différents et pour chacun utiliser au moins 3 pièces différentes. 
 			Une même pièce sera dans les 2 projets*/
+			-- Insérer des pièces pour le Projet Alpha
+insert into tbl_stock(id_projet, id_piece)
+select 
+    p.id_projet, 
+    pi.id_piece
+from tbl_projet p 
+join tbl_piece pi on pi.description in ('Pièce 1', 'Pièce 2', 'Pièce 3') 
+where p.nom = 'Projet Alpha';
+
+insert into tbl_stock(id_projet, id_piece)
+select 
+    p.id_projet, 
+    pi.id_piece
+from tbl_projet p 
+join tbl_piece pi on pi.description in ('Pièce 2', 'Pièce 4', 'Pièce 5') 
+where p.nom = 'Projet Beta';
+
 
 /* 3. c)	Pour la table d’imputation, utiliser comme employé, un employé ayant le même nom qu’un autre. 			
 			Pour un même projet,un des employés aura 2 imputations et l’autre une. 
