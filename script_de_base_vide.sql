@@ -95,10 +95,10 @@ go
 		/* contraintes APRES la céation de la dernière table */
 
 		create table tbl_impute(
-		quantite_impute int,
-		date_imputee date,
 		id_employee int not null,
-		id_stock int not null
+		id_stock int not null,
+		quantite_impute int,
+		date_imputee date
 		)
 		go
 
@@ -139,60 +139,67 @@ where tbl_employee.nom = e.nom
 and tbl_employee.prenom = e.prenom  
 and tbl_employee.id_employee <> e.id_employee) employeeIdentique 
 ORDER BY e.nom, e.prenom;
-
-
+go
 
 /* 3. ajout de données, au moins 3 dans chaque table */
 
 /* 3. a)	Pour la table de projet, ajouter 4 données dont 2 pour la même compagnie */
 
--- Insertion de projets
+INSERT INTO tbl_compagnie (id_compagnie, nom) VALUES
+(1, 'HyperNet Solutions'),
+(2, 'Infinity Network Systems'),
+(3, 'FiberLink Technologies'),
+(4, 'SkyBridge Communications'),
+(5, 'CoreConnect Networks');
+go
+
+
 insert into tbl_projet(nom, description, id_compagnie)
 select 
     'Projet Alpha', 'Description du projet Alpha', c.id_compagnie
 from tbl_compagnie c
-where c.nom = 'Compagnie X'
+where c.nom = 'HyperNet Solutions'
 
 union all
 
 select 
     'Projet Beta', 'Description du projet Beta', c.id_compagnie
 from tbl_compagnie c
-where c.nom = 'Compagnie Y'
+where c.nom = 'Infinity Network Systems'
 
 union all
 
 select 
     'Projet Gamma', 'Description du projet Gamma', c.id_compagnie
 from tbl_compagnie c
-where c.nom = 'Compagnie X'
+where c.nom = 'HyperNet Solutions'
 
 union all
 
 select 
     'Projet Delta', 'Description du projet Delta', c.id_compagnie
 from tbl_compagnie c
-where c.nom = 'Compagnie Z';
+where c.nom = 'FiberLink Technologies';
 
+go
 
 /* 3. b)	Pour la table des projets-pièces, faites des ajouts pour 2 projets différents et pour chacun utiliser au moins 3 pièces différentes. 
 			Une même pièce sera dans les 2 projets*/
-			-- Insérer des pièces pour le Projet Alpha
-insert into tbl_stock(id_projet, id_piece)
-select 
-    p.id_projet, 
-    pi.id_piece
-from tbl_projet p 
-join tbl_piece pi on pi.description in ('Pièce 1', 'Pièce 2', 'Pièce 3') 
-where p.nom = 'Projet Alpha';
+			
 
-insert into tbl_stock(id_projet, id_piece)
-select 
-    p.id_projet, 
-    pi.id_piece
-from tbl_projet p 
-join tbl_piece pi on pi.description in ('Pièce 2', 'Pièce 4', 'Pièce 5') 
-where p.nom = 'Projet Beta';
+INSERT INTO tbl_stock (id_projet, id_piece)
+SELECT p.id_projet, pi.id_piece
+FROM tbl_projet p
+JOIN tbl_piece pi ON pi.description IN ('Netgear Nighthawk RAX120', 'Cable Matters Cat 6a', 'Axis Q6115-E PTZ Camera')
+WHERE p.nom = 'Projet Alpha';
+go
+
+INSERT INTO tbl_stock (id_projet, id_piece)
+SELECT p.id_projet, pi.id_piece
+FROM tbl_projet p
+JOIN tbl_piece pi ON pi.description IN ('Cable Matters Cat 6a', 'Asus XG-C100C', 'Belkin Patch Cable Cat6a 1m')
+WHERE p.nom = 'Projet Beta';
+go
 
 
 /* 3. c)	Pour la table d’imputation, utiliser comme employé, un employé ayant le même nom qu’un autre. 			
@@ -201,7 +208,16 @@ where p.nom = 'Projet Beta';
 			Ajouter 2 pièces différentes parmi celles importées et une pareille. Bien entendu, ce doit être les pièces déjà associées à ce projet (projets-pièces). 
 			Assurez-vous que ce soit toujours la date d’aujourd’hui lorsque vous exécutez votre script.
 			*/
+-- Trouver 2 employés avec le même nom (directement dans la requête
+
+
+
+
+
+
 /* c) même chose pour un 2e projet */ 
+
+
 
 /* 4. un select des tables pour prouver les bons ajouts */
 
