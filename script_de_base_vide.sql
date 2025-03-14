@@ -208,7 +208,7 @@ go
 			Ajouter 2 pièces différentes parmi celles importées et une pareille. Bien entendu, ce doit être les pièces déjà associées à ce projet (projets-pièces). 
 			Assurez-vous que ce soit toujours la date d’aujourd’hui lorsque vous exécutez votre script.
 			*/
--- Trouver 2 employés avec le même nom (directement dans la requête
+
 
 
 
