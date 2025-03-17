@@ -133,10 +133,10 @@ go
 
 
 
-select e.nom, e.prenom, e.email
+select distinct e.nom, e.prenom, e.email
 from tbl_employee e cross apply (select* from tbl_employee 
 where tbl_employee.nom = e.nom 
-and tbl_employee.prenom <> e.prenom  
+and tbl_employee.prenom = e.prenom  
 and tbl_employee.id_employee <> e.id_employee) employeeIdentique 
 ORDER BY e.nom, e.prenom;
 go
@@ -214,34 +214,44 @@ INSERT INTO [dbo].[tbl_impute]
     ([id_employee], [id_stock], [quantite_impute], [date_imputee])
 
 
-SELECT e1.id_employee, s1.id_stock, 5, GETDATE()
-FROM tbl_employee e1
-INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
-INNER JOIN tbl_stock s1 ON s1.id_piece = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Alpha')
-WHERE e1.nom = 'Tremblay' AND e1.prenom = 'Émilie' AND e2.prenom = 'Jean-François'
-AND s1.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Netgear Nighthawk RAX120')
+
+select (select distinct id_employee from tbl_employee e1 where  e1.nom = 'Tremblay' 
+AND e1.prenom = 'Émilie' 
+AND e1.email = 'emilie.trem@gmail.com'), tbl_stock.id_stock,  5, GETDATE()
+from tbl_stock 
+inner join tbl_projet on tbl_stock.id_projet = tbl_projet.id_projet 
+inner join tbl_piece on tbl_piece.id_piece = tbl_stock.id_piece
+where tbl_stock.id_piece in (SELECT id_piece FROM tbl_piece WHERE description = 'Netgear Nighthawk RAX120')
+and tbl_stock.id_projet in (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Alpha')
 
 UNION ALL
 
-
-SELECT e1.id_employee, s2.id_stock, 7, GETDATE()
-FROM tbl_employee e1
-INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
-INNER JOIN tbl_stock s2 ON s2.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Alpha')
-WHERE e1.nom = 'Tremblay' AND e1.prenom = 'Émilie' AND e2.prenom = 'Jean-François'
-AND s2.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Cable Matters Cat 6a')
+SELECT (select distinct id_employee from tbl_employee e1 where  e1.nom = 'Tremblay' 
+AND e1.prenom = 'Émilie' 
+AND e1.email = 'emilie.trem@gmail.com'), tbl_stock.id_stock,  5, GETDATE()
+FROM tbl_stock 
+inner join tbl_projet on tbl_stock.id_projet = tbl_projet.id_projet 
+inner join tbl_piece on tbl_piece.id_piece = tbl_stock.id_piece
+where tbl_stock.id_piece = (SELECT id_piece FROM tbl_piece WHERE description = 'Cable Matters Cat 6a') 
+and tbl_stock.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Alpha')
 
 UNION ALL
 
-
-SELECT e2.id_employee, s3.id_stock, 10, GETDATE()
+SELECT TOP 1 e2.id_employee, tbl_stock.id_stock, 5, GETDATE()
 FROM tbl_employee e1
-INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
-INNER JOIN tbl_stock s3 ON s3.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Alpha') 
-WHERE e1.nom = 'Tremblay' AND e1.prenom = 'Émilie' AND e2.prenom = 'Jean-François'
-AND s3.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Netgear Nighthawk RAX120') 
+INNER JOIN tbl_employee e2 ON e1.nom = e2.nom 
+                           AND e1.prenom = e2.prenom 
+                           AND e1.id_employee <> e2.id_employee 
+                           AND e2.email <> 'emilie.trem@gmail.com'  -- S'assurer que c'est un autre email
+INNER JOIN tbl_stock ON tbl_stock.id_projet = (SELECT id_projet FROM tbl_projet WHERE nom = 'Projet Alpha')
+INNER JOIN tbl_piece ON tbl_piece.id_piece = tbl_stock.id_piece
+WHERE tbl_stock.id_piece IN (SELECT id_piece FROM tbl_piece WHERE description = 'Netgear Nighthawk RAX120')
+AND e1.nom = 'Tremblay' 
+AND e1.prenom = 'Émilie'
 
-go
+
+
+
 
 
 /* c) même chose pour un 2e projet */ 
@@ -250,42 +260,53 @@ INSERT INTO [dbo].[tbl_impute]
     ([id_employee], [id_stock], [quantite_impute], [date_imputee])
 
 
-SELECT e1.id_employee, s1.id_stock, 3, GETDATE()
-FROM tbl_employee e1
-INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
-INNER JOIN tbl_stock s1 ON s1.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Beta')
-WHERE e1.nom = 'Adams' AND e1.prenom = 'Nora' AND e2.prenom = 'Pandora'
-AND s1.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Cable Matters Cat 6a')
+
+select (select distinct id_employee from tbl_employee e1 where  e1.nom = 'Bergeron' 
+AND e1.prenom = 'Michel' 
+AND e1.email = 'mbergeron@gmail.com'), tbl_stock.id_stock,  5, GETDATE()
+from tbl_stock 
+inner join tbl_projet on tbl_stock.id_projet = tbl_projet.id_projet 
+inner join tbl_piece on tbl_piece.id_piece = tbl_stock.id_piece
+where tbl_stock.id_piece in (SELECT id_piece FROM tbl_piece WHERE description = 'Belkin Patch Cable Cat6a 1m')
+and tbl_stock.id_projet in (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Beta')
 
 UNION ALL
 
-
-SELECT e1.id_employee, s2.id_stock, 5, GETDATE()
-FROM tbl_employee e1
-INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
-INNER JOIN tbl_stock s2 ON s2.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Beta')
-WHERE e1.nom = 'Adams' AND e1.prenom = 'Nora' AND e2.prenom = 'Pandora'
-AND s2.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Axis Q6115-E PTZ Camera')
+SELECT (select distinct id_employee from tbl_employee e1 where  e1.nom = 'Bergeron' 
+AND e1.prenom = 'Michel' 
+AND e1.email = 'mbergeron@gmail.com'), tbl_stock.id_stock,  5, GETDATE()
+FROM tbl_stock 
+inner join tbl_projet on tbl_stock.id_projet = tbl_projet.id_projet 
+inner join tbl_piece on tbl_piece.id_piece = tbl_stock.id_piece
+where tbl_stock.id_piece = (SELECT id_piece FROM tbl_piece WHERE description = 'Asus XG-C100C') 
+and tbl_stock.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Beta')
 
 UNION ALL
 
-
-SELECT e2.id_employee, s3.id_stock, 11, GETDATE()
+SELECT TOP 1 e2.id_employee, tbl_stock.id_stock, 5, GETDATE()
 FROM tbl_employee e1
-INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
-INNER JOIN tbl_stock s3 ON s3.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Beta')
-WHERE e1.nom = 'Adams' AND e1.prenom = 'Nora' AND e2.prenom = 'Pandora'
-AND s3.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Cable Matters Cat 6a')
-
-go
+INNER JOIN tbl_employee e2 ON e1.nom = e2.nom 
+                           AND e1.prenom = e2.prenom 
+                           AND e1.id_employee <> e2.id_employee 
+                           AND e2.email <> 'mbergeron@gmail.com'  -- S'assurer que c'est un autre email
+INNER JOIN tbl_stock ON tbl_stock.id_projet = (SELECT id_projet FROM tbl_projet WHERE nom = 'Projet Beta')
+INNER JOIN tbl_piece ON tbl_piece.id_piece = tbl_stock.id_piece
+WHERE tbl_stock.id_piece IN (SELECT id_piece FROM tbl_piece WHERE description = 'Belkin Patch Cable Cat6a 1m')
+AND e1.nom = 'Bergeron' 
+AND e1.prenom = 'Michel'
 
 
 /* 4. un select des tables pour prouver les bons ajouts */
 
-select* from tbl_impute 
-
-select* from tbl_stock
-
+SELECT        tbl_compagnie.nom, tbl_employee.nom AS Expr1, tbl_employee.prenom, tbl_employee.email, tbl_impute.quantite_impute, tbl_impute.date_imputee, tbl_piece.description, tbl_piece.type, tbl_piece.marqueModele, 
+                         tbl_piece.numeroIndustrie, tbl_piece.caracteristiques, tbl_impute.id_employee, tbl_impute.id_stock, tbl_projet.nom AS Expr2, tbl_projet.description AS Expr3, tbl_projet.id_compagnie, tbl_stock.quantite_stock, 
+                         tbl_stock.quantite_prevu, tbl_stock.id_piece, tbl_stock.id_projet
+FROM            tbl_projet INNER JOIN
+                         tbl_compagnie ON tbl_projet.id_compagnie = tbl_compagnie.id_compagnie INNER JOIN
+                         tbl_stock ON tbl_projet.id_projet = tbl_stock.id_projet INNER JOIN
+                         tbl_piece ON tbl_stock.id_piece = tbl_piece.id_piece INNER JOIN
+                         tbl_impute INNER JOIN
+                         tbl_employee ON tbl_impute.id_employee = tbl_employee.id_employee ON tbl_stock.id_stock = tbl_impute.id_stock
 
 
 /* 5.	Faites une instruction SQL qui vous affiche, pour chaque pièce, le nombre d’imputations réalisé en tout dans le magasin, 
