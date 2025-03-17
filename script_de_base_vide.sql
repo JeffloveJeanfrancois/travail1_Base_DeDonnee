@@ -136,7 +136,7 @@ go
 select e.nom, e.prenom, e.email
 from tbl_employee e cross apply (select* from tbl_employee 
 where tbl_employee.nom = e.nom 
-and tbl_employee.prenom = e.prenom  
+and tbl_employee.prenom <> e.prenom  
 and tbl_employee.id_employee <> e.id_employee) employeeIdentique 
 ORDER BY e.nom, e.prenom;
 go
@@ -186,7 +186,6 @@ go
 /* 3. b)	Pour la table des projets-pièces, faites des ajouts pour 2 projets différents et pour chacun utiliser au moins 3 pièces différentes. 
 			Une même pièce sera dans les 2 projets*/
 			
-
 INSERT INTO tbl_stock (id_projet, id_piece)
 SELECT p.id_projet, pi.id_piece
 FROM tbl_projet p
@@ -211,15 +210,83 @@ go
 
 
 
+INSERT INTO [dbo].[tbl_impute] 
+    ([id_employee], [id_stock], [quantite_impute], [date_imputee])
 
 
+SELECT e1.id_employee, s1.id_stock, 5, GETDATE()
+FROM tbl_employee e1
+INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
+INNER JOIN tbl_stock s1 ON s1.id_piece = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Alpha')
+WHERE e1.nom = 'Tremblay' AND e1.prenom = 'Émilie' AND e2.prenom = 'Jean-François'
+AND s1.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Netgear Nighthawk RAX120')
+
+UNION ALL
+
+
+SELECT e1.id_employee, s2.id_stock, 7, GETDATE()
+FROM tbl_employee e1
+INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
+INNER JOIN tbl_stock s2 ON s2.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Alpha')
+WHERE e1.nom = 'Tremblay' AND e1.prenom = 'Émilie' AND e2.prenom = 'Jean-François'
+AND s2.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Cable Matters Cat 6a')
+
+UNION ALL
+
+
+SELECT e2.id_employee, s3.id_stock, 10, GETDATE()
+FROM tbl_employee e1
+INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
+INNER JOIN tbl_stock s3 ON s3.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Alpha') 
+WHERE e1.nom = 'Tremblay' AND e1.prenom = 'Émilie' AND e2.prenom = 'Jean-François'
+AND s3.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Netgear Nighthawk RAX120') 
+
+go
 
 
 /* c) même chose pour un 2e projet */ 
 
+INSERT INTO [dbo].[tbl_impute] 
+    ([id_employee], [id_stock], [quantite_impute], [date_imputee])
+
+
+SELECT e1.id_employee, s1.id_stock, 3, GETDATE()
+FROM tbl_employee e1
+INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
+INNER JOIN tbl_stock s1 ON s1.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Beta')
+WHERE e1.nom = 'Adams' AND e1.prenom = 'Nora' AND e2.prenom = 'Pandora'
+AND s1.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Cable Matters Cat 6a')
+
+UNION ALL
+
+
+SELECT e1.id_employee, s2.id_stock, 5, GETDATE()
+FROM tbl_employee e1
+INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
+INNER JOIN tbl_stock s2 ON s2.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Beta')
+WHERE e1.nom = 'Adams' AND e1.prenom = 'Nora' AND e2.prenom = 'Pandora'
+AND s2.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Axis Q6115-E PTZ Camera')
+
+UNION ALL
+
+
+SELECT e2.id_employee, s3.id_stock, 11, GETDATE()
+FROM tbl_employee e1
+INNER JOIN tbl_employee e2 ON e1.nom = e2.nom AND e1.id_employee <> e2.id_employee
+INNER JOIN tbl_stock s3 ON s3.id_projet = (select tbl_projet.id_projet from tbl_projet where nom = 'Projet Beta')
+WHERE e1.nom = 'Adams' AND e1.prenom = 'Nora' AND e2.prenom = 'Pandora'
+AND s3.id_piece = (select tbl_piece.id_piece from tbl_piece where description = 'Cable Matters Cat 6a')
+
+go
 
 
 /* 4. un select des tables pour prouver les bons ajouts */
+
+select* from tbl_impute 
+
+select* from tbl_stock
+
+
 
 /* 5.	Faites une instruction SQL qui vous affiche, pour chaque pièce, le nombre d’imputations réalisé en tout dans le magasin, 
 		la quantité totale de pièces imputées, 
