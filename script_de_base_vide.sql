@@ -26,7 +26,7 @@ go
 /* création de vos tables simples */
 
 create table tbl_compagnie(
-id_compagnie int primary key,
+id_compagnie int identity primary key,
 nom nvarchar(200) unique
 )
 go
@@ -34,10 +34,7 @@ go
 create table tbl_piece(
 id_piece int identity primary key,
 description nvarchar(200),
-type nvarchar(200),
-marqueModele nvarchar(200),
-numeroIndustrie nvarchar(200) unique,
-caracteristiques nvarchar(200)
+numeroIndustrie nvarchar(200) unique
 )
 go
 
@@ -72,7 +69,7 @@ go
 	create table tbl_projet(
 	id_projet int identity primary key,
 	nom nvarchar(200) unique,
-	description nvarchar(200), 
+	description nvarchar(200) unique, 
 	id_compagnie int references tbl_compagnie(id_compagnie) not null
 	)
 	go
@@ -82,7 +79,7 @@ go
 	quantite_stock int,
 	quantite_prevu int,
 	check (quantite_stock >= 0),
-	Check (quantite_prevu >= 0),
+	Check (quantite_prevu > 0),
 	id_piece int references tbl_piece(id_piece) not null,
 	id_projet int references tbl_projet(id_projet) not null,
 	constraint UQ_projetPiece unique (id_piece, id_projet)
@@ -105,7 +102,7 @@ go
 		alter table tbl_impute
 		add constraint FK_impute_employee foreign key (id_employee) references tbl_employee(id_employee),
 		constraint FK_impute_stock foreign key (id_stock) references tbl_stock(id_stock),
-		constraint CK_quantiteImpute Check (quantite_impute >= 0),
+		constraint CK_quantiteImpute Check (quantite_impute > 0),
 		constraint Dt_dateImpute check (date_imputee <= getDate())
 
 		go
@@ -145,12 +142,12 @@ go
 
 /* 3. a)	Pour la table de projet, ajouter 4 données dont 2 pour la même compagnie */
 
-INSERT INTO tbl_compagnie (id_compagnie, nom) VALUES
-(1, 'HyperNet Solutions'),
-(2, 'Infinity Network Systems'),
-(3, 'FiberLink Technologies'),
-(4, 'SkyBridge Communications'),
-(5, 'CoreConnect Networks');
+INSERT INTO tbl_compagnie (nom) VALUES
+('HyperNet Solutions'),
+('Infinity Network Systems'),
+('FiberLink Technologies'),
+('SkyBridge Communications'),
+('CoreConnect Networks');
 go
 
 
@@ -186,15 +183,15 @@ go
 /* 3. b)	Pour la table des projets-pièces, faites des ajouts pour 2 projets différents et pour chacun utiliser au moins 3 pièces différentes. 
 			Une même pièce sera dans les 2 projets*/
 			
-INSERT INTO tbl_stock (id_projet, id_piece)
-SELECT p.id_projet, pi.id_piece
+INSERT INTO tbl_stock (id_projet, id_piece, quantite_prevu, quantite_stock)
+SELECT p.id_projet, pi.id_piece, 55, 100
 FROM tbl_projet p
 JOIN tbl_piece pi ON pi.description IN ('Netgear Nighthawk RAX120', 'Cable Matters Cat 6a', 'Axis Q6115-E PTZ Camera')
 WHERE p.nom = 'Projet Alpha';
 go
 
-INSERT INTO tbl_stock (id_projet, id_piece)
-SELECT p.id_projet, pi.id_piece
+INSERT INTO tbl_stock (id_projet, id_piece, quantite_prevu, quantite_stock)
+SELECT p.id_projet, pi.id_piece, 70, 250
 FROM tbl_projet p
 JOIN tbl_piece pi ON pi.description IN ('Cable Matters Cat 6a', 'Asus XG-C100C', 'Belkin Patch Cable Cat6a 1m')
 WHERE p.nom = 'Projet Beta';
@@ -298,8 +295,8 @@ AND e1.prenom = 'Michel'
 
 /* 4. un select des tables pour prouver les bons ajouts */
 
-SELECT        tbl_compagnie.nom, tbl_employee.nom AS Expr1, tbl_employee.prenom, tbl_employee.email, tbl_impute.quantite_impute, tbl_impute.date_imputee, tbl_piece.description, tbl_piece.type, tbl_piece.marqueModele, 
-                         tbl_piece.numeroIndustrie, tbl_piece.caracteristiques, tbl_impute.id_employee, tbl_impute.id_stock, tbl_projet.nom AS Expr2, tbl_projet.description AS Expr3, tbl_projet.id_compagnie, tbl_stock.quantite_stock, 
+SELECT        tbl_compagnie.nom, tbl_employee.nom AS Expr1, tbl_employee.prenom, tbl_employee.email, tbl_impute.quantite_impute, tbl_impute.date_imputee, tbl_piece.description, 
+                         tbl_piece.numeroIndustrie, tbl_impute.id_employee, tbl_impute.id_stock, tbl_projet.nom AS Expr2, tbl_projet.description AS Expr3, tbl_projet.id_compagnie, tbl_stock.quantite_stock, 
                          tbl_stock.quantite_prevu, tbl_stock.id_piece, tbl_stock.id_projet
 FROM            tbl_projet INNER JOIN
                          tbl_compagnie ON tbl_projet.id_compagnie = tbl_compagnie.id_compagnie INNER JOIN
@@ -313,24 +310,80 @@ FROM            tbl_projet INNER JOIN
 		la quantité totale de pièces imputées, 
 		et le nombre de projets dont elle fait partie. (Select avancé).
 */
+
+SELECT 
+    p.id_piece, 
+    p.description, 
+    statistiques.nombre_imputations, 
+    statistiques.quantite_totale_imputee, 
+    statistiques.nombre_projets
+FROM tbl_piece p
+INNER JOIN (
+    SELECT 
+        s.id_piece,
+        COUNT(i.id_stock) AS nombre_imputations,
+        SUM(i.quantite_impute) AS quantite_totale_imputee,
+        COUNT(DISTINCT s.id_projet) AS nombre_projets
+    FROM tbl_stock s
+    INNER JOIN tbl_impute i ON s.id_stock = i.id_stock
+    GROUP BY s.id_piece
+) statistiques ON p.id_piece = statistiques.id_piece;
+
+
 /* 6. tests de contrainte  */
 /* contrainte CHECK sur email */	
 
+	--alter table tbl_employee
+	--add constraint Ck_email Check (email like '%[@]%')
+
+	--INSERT INTO tbl_employee(email) VALUES ('jeffLoveGmail.com')
+
 /* contrainte CHECK sur quantitePrevu */	
 
+	--Check (quantite_prevu >= 0 a voir un peu plus haut dans la table stock
+
+	--INSERT INTO tbl_stock (id_piece, id_projet,  quantite_prevu) VALUES (4, 1, -5)
+
 /* contrainte CHECK sur quantiteStock */
+
+	--Check (quantite_stock >= 0) voir plus haut dans la table stock
+
+	--INSERT INTO tbl_stock (id_piece, id_projet,  quantite_stock) VALUES (4, 1, -2)
 	
 /* contrainte CHECK sur quantitePieceImpute */
 
+	--constraint CK_quantiteImpute Check (quantite_impute > 0)
+
+	--INSERT INTO tbl_impute (id_employee, id_stock, quantite_impute) VALUES (1, 1, 0);
+
+
 /* contrainte sur dateImputation */
+
+	--constraint Dt_dateImpute check (date_imputee <= getDate())
+
+	--INSERT INTO tbl_impute (id_employee, id_stock, date_imputee) VALUES (1, 1, '2030-01-01')
 	
 /* m'assure qu'il n'y a pas 2 pièces pareils pour un projet */
+
+	--constraint UQ_projetPiece unique (id_piece, id_projet)
+
+	--INSERT INTO tbl_stock (id_piece, id_projet) VALUES (1, 1)
 	
 /* La description d’un projet ne pourra pas être identique à un autre projet*/
 
+	--description nvarchar(200) unique voir creation de la table projet plus haut 
+
+	--INSERT INTO tbl_projet (nom, description, id_compagnie) VALUES ('Projet X', 'Description du projet Alpha', 3)
+
 /* le nom de compagnie ne peut pas être identique à une autre compagnie */
 
+	--nom nvarchar(200) unique
+	--INSERT INTO tbl_compagnie(nom) VALUES ('HyperNet Solutions')
+
 /* les numéros d’une pièce de l’industrie doivent être tous différents*/
+
+	--numeroIndustrie nvarchar(200) unique
+	--INSERT INTO tbl_piece (numeroIndustrie) VALUES ('RAX120-100NAS')
 
 
 
