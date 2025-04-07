@@ -1,0 +1,120 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|c:\\users\\2334062.corporatif\\desktop\\travail1_partie_4\\travail1_partie_4\\recherchermodifieremploye.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|solutionrelative:travail1_partie_4\\recherchermodifieremploye.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|c:\\users\\2334062.corporatif\\desktop\\travail1_partie_4\\travail1_partie_4\\recherchermodifieremploye.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|solutionrelative:travail1_partie_4\\recherchermodifieremploye.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\travail1_partie_4\\menuform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|solutionrelative:travail1_partie_4\\menuform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|c:\\users\\2334062.corporatif\\desktop\\travail1_partie_4\\travail1_partie_4\\manager\\manageremploye.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|solutionrelative:travail1_partie_4\\manager\\manageremploye.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|c:\\users\\2334062.corporatif\\desktop\\travail1_partie_4\\travail1_partie_4\\mesajouts\\mesajouts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|solutionrelative:travail1_partie_4\\mesajouts\\mesajouts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|c:\\users\\2334062.corporatif\\desktop\\travail1_partie_4\\travail1_partie_4\\menuform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0C2DF68-CC75-4BD6-83A4-4E69B1FB7626}|Travail1_Partie_4\\Travail1_Partie_4.csproj|solutionrelative:travail1_partie_4\\menuform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MesAjouts.cs",
+              "DocumentMoniker": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\MesAjouts\\MesAjouts.cs",
+              "RelativeDocumentMoniker": "Travail1_Partie_4\\MesAjouts\\MesAjouts.cs",
+              "ToolTip": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\MesAjouts\\MesAjouts.cs",
+              "RelativeToolTip": "Travail1_Partie_4\\MesAjouts\\MesAjouts.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T14:13:35.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ManagerEmploye.cs",
+              "DocumentMoniker": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\Manager\\ManagerEmploye.cs",
+              "RelativeDocumentMoniker": "Travail1_Partie_4\\Manager\\ManagerEmploye.cs",
+              "ToolTip": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\Manager\\ManagerEmploye.cs",
+              "RelativeToolTip": "Travail1_Partie_4\\Manager\\ManagerEmploye.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABkAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T13:35:54.512Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RechercherModifierEmploye.cs [Conception]",
+              "DocumentMoniker": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\RechercherModifierEmploye.cs",
+              "RelativeDocumentMoniker": "Travail1_Partie_4\\RechercherModifierEmploye.cs",
+              "ToolTip": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\RechercherModifierEmploye.cs [Conception]",
+              "RelativeToolTip": "Travail1_Partie_4\\RechercherModifierEmploye.cs [Conception]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T13:31:03.69Z",
+              "EditorCaption": " [Conception]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RechercherModifierEmploye.cs",
+              "DocumentMoniker": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\RechercherModifierEmploye.cs",
+              "RelativeDocumentMoniker": "Travail1_Partie_4\\RechercherModifierEmploye.cs",
+              "ToolTip": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\RechercherModifierEmploye.cs",
+              "RelativeToolTip": "Travail1_Partie_4\\RechercherModifierEmploye.cs",
+              "ViewState": "AgIAAGIAAAAAAAAAAAArwIcAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T13:23:12.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MenuForm.cs",
+              "DocumentMoniker": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\MenuForm.cs",
+              "RelativeDocumentMoniker": "Travail1_Partie_4\\MenuForm.cs",
+              "ToolTip": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\MenuForm.cs",
+              "RelativeToolTip": "Travail1_Partie_4\\MenuForm.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAswBYAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T12:47:01.637Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MenuForm.cs [Conception]",
+              "DocumentMoniker": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\MenuForm.cs",
+              "RelativeDocumentMoniker": "Travail1_Partie_4\\MenuForm.cs",
+              "ToolTip": "C:\\Users\\2334062.CORPORATIF\\Desktop\\Travail1_Partie_4\\Travail1_Partie_4\\MenuForm.cs [Conception]",
+              "RelativeToolTip": "Travail1_Partie_4\\MenuForm.cs [Conception]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T12:45:38.59Z",
+              "EditorCaption": " [Conception]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
