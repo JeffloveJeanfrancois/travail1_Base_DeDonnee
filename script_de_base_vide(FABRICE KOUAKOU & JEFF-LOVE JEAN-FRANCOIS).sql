@@ -92,6 +92,7 @@ go
 		/* contraintes APRES la céation de la dernière table */
 
 		create table tbl_impute(
+		id_impute int identity primary key, 
 		id_employee int not null,
 		id_stock int not null,
 		quantite_impute int,
